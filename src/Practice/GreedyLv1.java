@@ -1,44 +1,58 @@
 package Practice;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+
+/*
+*   int n = 5;
+    int[] lost = {1, 2, 4};
+    int[] reserve = {2, 4, 5}; // 정답 4
+
+    int n = 5;
+    int[] lost = {1, 2, 4};
+    int[] reserve = {2, 3, 4, 5}; // 정답 4
+*
+* */
 public class GreedyLv1 {
-    public int solution(int n, int[] lost, int[] reserve) {
+    public int solution1(int n, int[] lost, int[] reserve) {
         int answer = 0;
-        List<Integer> reservlist = new ArrayList<>();
-        List<Integer> lostlist = new ArrayList<>();
-        answer = n - lost.length;// n - lost.length() == return
+        int cnt=0;
+        Set<Integer> reservset = new HashSet<>();
+        Set<Integer> lostset = new HashSet<>();
+        if(n>=2 && n<=30 && n>=lost.length && lost.length>=1 && reserve.length>=1 && n>=reserve.length) {
+            answer = n - lost.length;// n - lost.length() == returnnj
 
-        for(int reserv : reserve) {
-            reservlist.add(reserv);
-        }
+            for(int reserv : reserve) {
+                reservset.add(reserv);
+            }
+            List<Integer> reservlist = new ArrayList<>(reservset);
+            reservlist.sort(Comparator.naturalOrder());
+            for(int losts : lost) {
+                lostset.add(losts);
+            }
+            List<Integer> lostlist = new ArrayList<>(lostset);
+            lostlist.sort(Comparator.naturalOrder());
 
-        for(int losts : lost) {
-            lostlist.add(losts);
-        }
-
-        for(int i=0;i<reservlist.size();i++) {
-            for(int k=0;k<lostlist.size();k++) {
-                if (reservlist.get(i) == lostlist.get(k)) {
-                    lostlist.remove(k);
-                    reservlist.remove(i);
-                    answer++;
-                    k=0;
+            for(int h=reservlist.size()-1;h>=0;h--) {
+                for (int k = 0; k < lostlist.size(); k++) {
+                    if (reservlist.get(h) == lostlist.get(k) && reservlist.get(h)>0 && lostlist.get(k)>0) {
+                        lostlist.remove(k);
+                        reservlist.remove(h);
+                        answer++;
+                    }
                 }
             }
-            for(int j=0;j<lostlist.size();j++) {
-                if(answer == n) {
-                    break;
-                }
-                else if(reservlist.get(i)+1 == lostlist.get(j)) {
-                    // if() reserve[i] == lost[j]+1 || lost[j]-1 -> answer ++
-                    lostlist.remove(j);
-                    reservlist.remove(i);
-                    answer++;//빌려준애 빼는 로직 필요
-                } else if (reservlist.get(i)-1 == lostlist.get(j)) {
-                    lostlist.remove(j);
-                    reservlist.remove(i);
-                    answer++;
+            for(int i=0;i<reservlist.size();i++) {
+                for(int j=0;j<lostlist.size();j++) {
+                    if(answer == n ) {
+                        break;
+                    }
+                    else if(reservlist.get(i)+1 == lostlist.get(j) && reservlist.get(i)+1>0 && lostlist.get(j)>0) {
+                        answer++;//빌려준애 빼는 로직 필요
+                        break;
+                    } else if (reservlist.get(i)-1 == lostlist.get(j) && reservlist.get(i)-1>0 && lostlist.get(j)>0) {
+                        answer++;
+                        break;
+                    }
                 }
             }
         }
@@ -47,6 +61,6 @@ public class GreedyLv1 {
 
     public static void main(String[] args) {
         GreedyLv1 s = new GreedyLv1();
-        System.out.println(s.solution(6, new int[]{1,3,5}, new int[]{2,4,6}));
+        System.out.println(s.solution1(1, new int[0], new int[0]));
     }
 }
