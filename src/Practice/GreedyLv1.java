@@ -59,6 +59,33 @@ public class GreedyLv1 {
         return answer;
     }
 
+    public int solution2(int n, int[] lost, int[] reserve) {
+        int answer = 0;
+        Set<Integer> reservset = new HashSet<>();
+        Set<Integer> lostset = new HashSet<>();
+
+            for(int resv : reserve) {//배열을 HashSet에 넣기
+                reservset.add(resv);
+            }
+
+            for(int los : lost) {//도난된 사람 중 여분이 있는 학생만 HashSet에 넣기
+                if(reservset.contains(los)) {
+                    reservset.remove(los);
+                } else {
+                    lostset.add(los);
+                }
+            }
+
+            for(int i : reservset) {//여분 학생이 빌려줄 수 있는 사람 찾기
+                if(lostset.contains(i-1)) {
+                    lostset.remove(i-1);
+                } else if(lostset.contains(i+1)) {
+                    lostset.remove(i+1);
+                }
+            }
+        return n-lostset.size();
+    }
+
     public static void main(String[] args) {
         GreedyLv1 s = new GreedyLv1();
         System.out.println(s.solution1(1, new int[0], new int[0]));
