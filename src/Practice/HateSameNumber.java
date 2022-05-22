@@ -16,6 +16,7 @@ public class HateSameNumber {
         int[] answer = new int[list.size()]; //리스트의 배열크기와 같은 배열 생성
         for(int j=0;j<list.size();j++) {
             answer[j] = list.get(j);         //리스트에서 인덱스 순서대로 int배열에 담는다.
+
         }
 
         return answer;

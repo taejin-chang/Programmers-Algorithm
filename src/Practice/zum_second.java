@@ -93,7 +93,7 @@ class Solution {
         return answer;
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         Solution a = new Solution();
         int[] b = new int [5];
         int[][] c = new int [5][3];
@@ -101,5 +101,5 @@ class Solution {
 
         b= a.solution(c);
         System.out.println(b);
-    }
+    }*/
 }
